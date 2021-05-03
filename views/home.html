@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">        
+    </head>
+    <body class="d-flex h-100 text-center text-white bg-dark">
+        <div class="cover-container d-flex w-100 h-100 p3 mx-auto flex-column">
+            <header class="mb-auto">
+                <nav class="navbar navbar-expand navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Smart Control Center</a>
+                
+                        <div class="collapse navbar-collapse">
+                            <ul class="navbar-nav me-auto nav-fill w-100">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/home">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/about">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/add-device">Add device</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/show-device-status">Show device status</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/update-device-status">Update device status</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/delete-device">Delete device</a>
+                                </li>
+                            </ul>                        
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <main class="px-3">
+                <h1 class="display-8 ">Smart Control Center App</h1>
+                <div class="mt-3">
+                    <h1 class="display-3">Welcome</h1>                
+                    <p class="lead">All things smart start here!</p>
+                </div>
+                
+            </main>
+            <footer class="mt-auto text-white-50">
+                <p>
+                    A website done for the midterm coursework by <a href="/about" class="text-white"><%= public_name_to_show %></a>
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>

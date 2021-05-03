@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body class="d-flex h-100 text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p3 mx-auto flex-column">
+        <header class="mb-auto">
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Smart Control Center</a>
+
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav me-auto nav-fill w-100">
+                            <li class="nav-item">
+                                <a href="/home" class="nav-link ">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/add-device">Add device</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/show-device-status">Show device status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/update-device-status">Update device status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/delete-device">Delete device</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main class="px-1 mb-auto px-5 text-left">
+            <p class="display-6">What is the purpose of this website?</p>
+            <p >This website aims to be the one stop solution for all your smart home devices needs</p>
+
+            <p class="display-6">Which options are allowed?</p>
+            <p>You can add and save your smart devices to your personal list along with its corresponding configurations.
+                <br>You can check the current configuration applied to each smart device.
+                <br>You can update your devices configuration.
+                <br>You can remove devices from the list.
+            </p>
+        
+            <p class="display-6">Who made this website?</p>
+            <p>This website was made by <strong class="font-weight-bold"><a href=<%= public_name_to_show_href %>><u><%= public_name_to_show %></u></a></strong></p>
+
+            <p class="display-6">What technology does this website use?</p>
+            <p>Node.js with the express framework, MySQL, EJS, and of course HTML and the CSS bootstrap library for styling purposes.</p>
+            
+        </main>        
+    </div>
+</body>
+
+</html>

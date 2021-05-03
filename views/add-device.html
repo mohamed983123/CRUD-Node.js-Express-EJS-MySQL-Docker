@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add device</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+</head>
+
+<body class=" h-100 text-white bg-dark">    
+    <div class="cover-container w-100 h-100 ">
+        <header class="mb-auto">
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Smart Control Center</a>
+
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav me-auto nav-fill w-100">
+                            <li class="nav-item">
+                                <a href="/home" class="nav-link ">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/add-device">Add device</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/show-device-status">Show device status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/update-device-status">Update device status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/delete-device">Delete device</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+                
+        <main class="mx-5 my-5 mb-auto " style="display: flex; justify-content: center; align-items: center;">
+            <% if(!stepTwo){ %>
+                <div class="container" style="max-width: 85%;">
+                    <form id="formAddDeviceStep1" action="/addNewDevice" method="GET" >                    
+                        <div class="mb-3">
+                            <label class="form-label">Choose a Smart Device from the list</label>                            
+                            <select class="form-select w-100" name="smartdevice_type" style="align-self: center;">
+                                <% smartDevicesTypes.forEach(function (deviceType){ %>
+                                    <option><%= deviceType.slice(1,-1) %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                    </form>
+                    <button form="formAddDeviceStep1" type="submit" class="btn w-100 btn-success">Continue</button>
+                </div>
+                
+            <% } %>
+            <% if(stepTwo){ %>
+                            
+                <div class="container card bg-dark border-white mx-5 px-5 mb-5 py-5" style="max-width: 70%;" >                                    
+                    <form id="formAddDeviceStep2" action="/addNewDevice" method="POST" style="display: none;"></form>
+                    <% 
+                        switch(deviceChosen) {
+                            
+                            case 'Light': 
+                    %>
+                    <div class="form-switch mb-3 " >
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Red light %
+                        </div>
+                        <div class="col">
+                            <div class="input-group">                                                    
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="red">                                    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Green light %
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="green">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Blue light %
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="blue">
+                                
+                            </div>
+                        </div>
+                    </div>                                        
+                    <% 
+                            break;
+
+                            case 'Oven':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>                    
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Temperature
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="900" name="temperature">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="heat_from_above">
+                        <label class="form-check-label">Heat from above</label>
+                    </div>
+
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="heat_from_below">
+                        <label class="form-check-label">Heat from below</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Kitchen_hob':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner one power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_one">                                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner two power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_two">                                        
+                            </div>
+                        </div>
+                    </div>                
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner three power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_three">
+                                        
+                            </div>
+                        </div>
+                    </div>                
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner four power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_four">
+                                        
+                            </div>
+                        </div>
+                    </div>                
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner five power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_five">
+                                        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Burner six power
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="burner_six">
+                                        
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Microwave':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="9999" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Dishwasher':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="9999" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="hot_water">
+                        <label class="form-check-label">Hot water</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Refrigerator':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Temperature
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="900" name="temperature">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="holiday_mode">
+                        <label class="form-check-label">Holiday mode</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Washing_Machine':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="9999" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="hot_water">
+                        <label class="form-check-label">Hot water</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Drying_Machine':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="9999" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Television':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Channel
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="65534" name="channel">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Volume
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="volume">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Input source selected
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input form="formAddDeviceStep2"type="text" class="form-control input-text text-center" placeholder="Example: Television" minlength="0" maxlength="254" name="source">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="65534" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Speakers':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >                    
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Volume
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="volume">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Input source selected
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                <input form="formAddDeviceStep2"type="text" class="form-control input-text text-center" placeholder="Example: Spotify" minlength="0" maxlength="254" name="source">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-4 py-auto">
+                            Countdown timer (minutes)
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" name="countdown_timer" min="0" max="9999" class="form-control input-number text-center" value="0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Air_conditioning':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Temperature
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="900" name="temperature">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Fan speed
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="fan_speed">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Fan':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Fan speed
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="fan_speed">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Vacuum_cleaner_robot':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="self_charge_mode">
+                        <label class="form-check-label">Self charging mode</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Security_Camera':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="automatic_photo_shooting">
+                        <label class="form-check-label">Automatic photo shooting mode</label>
+                    </div>
+
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="night_mode">
+                        <label class="form-check-label">Night mode</label>
+                    </div>
+
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="automatic_video_recording">
+                        <label class="form-check-label">Auto-save video recording</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Thermostat':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Temperature
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                    
+                                <input form="formAddDeviceStep2" type="number" class="form-control input-number text-center" value="0"
+                                    min="10" max="30" name="temperature">
+                    
+                            </div>
+                        </div>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    
+                    <% 
+                            break;
+
+                            case 'Door_lock':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="locked">
+                        <label class="form-check-label">Locked</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <% 
+                            break;
+
+                            case 'Lawnmower_robot':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    
+                    <% 
+                            break;
+
+                            case 'Coffee_machine':
+
+                    %>
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="is_on">
+                        <label class="form-check-label">The device is ON/OFF</label>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    
+                    <% 
+                            break;
+
+                            case 'Window_shades':
+
+                    %>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col py-auto">
+                            Pull down window shade
+                        </div>
+                        <div class="col">
+                            <div class="input-group">
+                                
+                                <input form="formAddDeviceStep2"type="number" class="form-control input-number text-center" value="0" min="0" max="100" name="shade_down_percentage">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="automatic_mode">
+                        <label class="form-check-label">Automatic mode</label>
+                    </div>
+                    
+                    <% 
+                            break;
+
+                            case 'Smart_window':
+
+                    %>
+                    <input form="formAddDeviceStep2" type="text" name="smartdevice_type" style="display: none;" value=<%= deviceChosen %> >
+                    
+                    <div class="row w-100 form-switch mb-3" style="align-self: center;">
+                        <input form="formAddDeviceStep2"class="form-check-input" type="checkbox" name="open">
+                        <label class="form-check-label">Opened</label>
+                    </div>                    
+                    <% 
+                            break;
+                    %>
+                    <% } %>
+                    
+                    <button form="formAddDeviceStep2" type="submit" class="btn w-100 btn-success">Add  <%= deviceChosen %> !</button>
+                </div>
+                
+            <% } %>
+            
+
+        </main>
+    </div>
+</body>
+
+</html>

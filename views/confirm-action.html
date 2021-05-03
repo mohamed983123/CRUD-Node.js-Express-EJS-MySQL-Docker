@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirm action</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">        
+    </head>
+    <body class="h-100 text-center bg-dark px-5 my-5">
+        <div class="card  ">
+            <div class="card-header">
+                Are you sure you want to delete your device?
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">This action can't be reverted</h5>
+                <p class="card-text">Do you want to remove your <%= deviceTypeName %> with unique ID <%= deviceNumber %> from the smart home center?</p>
+
+                <% 
+                    valueTagID = deviceNumber.slice(1,-1)
+                %>
+                
+                <form action="/confirm-user-action" method="GET" id="deletionConfirmed" style="visibility: hidden;"></form>
+                <form action="/confirm-user-action" method="GET" id="deletionCancelled" style="visibility: hidden;"></form>
+
+                <input form="deletionCancelled" type="text" style="display:none;" name="device-id" value= <%= valueTagID %> >
+                <input form="deletionCancelled" type="submit" class="btn btn-primary" style="font-weight: bold;" name="deletion-resolution" value="Cancel">
+
+                <input form="deletionConfirmed" type="text" style="display:none;" name="device-id" value= <%= valueTagID %> >
+                <input form="deletionConfirmed" type="submit" class="btn btn-danger" style="font-weight: bold;" name="deletion-resolution" value="Confirm">
+            </div>
+        </div>
+    </body>
+</html>

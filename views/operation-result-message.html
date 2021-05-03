@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operation ended</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body class="h-100 text-center bg-dark px-5 my-5">
+    <div class="card  ">
+        <div class="card-header">
+            <%= cardHeader %>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><%= cardTitle %></h5>
+            <p class="card-text"><%= cardText %></p>            
+            <a <%= goBackHrefValue %>> 
+                    <button  class="btn btn-primary" style="font-weight: bold;">Go back</button>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
