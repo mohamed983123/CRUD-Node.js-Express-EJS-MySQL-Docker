@@ -15,7 +15,7 @@ This is a web-based application for managing smart home devices. It uses Node.js
 
 To run this application on your local machine, follow these steps:
 
-- Clone this repository: ```git clone https://github.com/ezema/CRUD-Node.js-Express-EJS-MySQL-Docker.git```.
+- Clone this repository: ```git clone https://github.com/mohamed983123/CRUD-Node.js-Express-EJS-MySQL-Docker.git```.
 - Optional: modify the ```.env``` file with the values of your choosing.
 - Run the following command to start the application: ```docker-compose up -d```.
 
